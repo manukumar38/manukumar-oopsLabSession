@@ -1,0 +1,83 @@
+package com.gl.itadmin.main;
+
+import java.util.Scanner;
+
+import com.gl.itadmin.model.Employee;
+import com.gl.itadmin.service.EmployeeService;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		System.out.println("Please Enter the first name :");
+		Scanner scn = new Scanner(System.in);
+		String firstName = scn.next();
+		System.out.println("Please Enter the last name :");
+		String lastName = scn.next();
+		System.out.println("Please Enter the department name :");
+		String departmentName = scn.next();
+		Employee emp = new Employee(firstName,lastName,departmentName);
+		scn.close();
+		int len = 10;
+        int randNumOrigin = '0', randNumBound = 'z';
+		System.out.println(EmployeeService.generateEmailId(emp));
+		System.out.println(EmployeeService.generateRandomPassword(len,randNumOrigin,randNumBound));
+	}
+
+}
+
+package com.gl.itadmin.model;
+
+public class Employee {
+	
+	public String firstName;
+	public String lastName;
+	public String departmentName;
+	
+	public Employee(String firstName,String lastName,String departmentName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.departmentName = departmentName;
+		
+		
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public String getDepartmentName() {
+		return departmentName;
+	}
+	
+
+}
+
+package com.gl.itadmin.service;
+
+import org.apache.commons.text.CharacterPredicates;
+import org.apache.commons.text.RandomStringGenerator;
+
+import com.gl.itadmin.model.Employee;
+
+public class EmployeeService {
+	
+	public static String generateEmailId(Employee emp) {
+		
+		return emp.firstName.concat(emp.lastName).concat("."+emp.departmentName+"@.gl.com");
+		
+	}
+	
+	public static String generateRandomPassword(int len, int randNumOrigin, int randNumBound)
+    {
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+                .withinRange(randNumOrigin, randNumBound)
+                .filteredBy(CharacterPredicates.ASCII_ALPHA_NUMERALS)
+                .build();
+ 
+        return generator.generate(len);
+    }
+		
+
+}
